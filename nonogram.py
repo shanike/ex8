@@ -52,21 +52,35 @@ def constraint_satisfactions_helper(n, blocks, arr, temp_arr=[], blocks_i=0):
         # temp_arr.extend([1 for x in range(block)]+[0][0])
 
 
-def constraint_satisfactions_helper2(n, blocks, temp_arr, arr, blocks_i=0):
+UNDECIDED = -1
 
     if blocks_i > len(blocks)+1 or len(temp_arr) == n:
         arr.append(temp_arr)
         return
 
-    for i in range(len(blocks)):
-        block = blocks[i]
-        temp_arr.extend([1 for x in range(block)])
+def intersection_row(rows):
+    """returns intersection of all rows. if no concrete intersection for pos i - will set pos i to -1
 
-        constraint_satisfactions_helper2(n, blocks, temp_arr, arr, blocks_i=i)
+        :param rows: {list of list of numbers (1 0 or -1)}
 
-        # del temp_arr[-1*(block+1):len(temp_arr)]
-        temp_arr.insert(-1*(block+1), 0)
-        print('temp_arr: ', temp_arr);
+    Returns:
+        intersections -- list of numbers representing the intersection of columns in <rows>
+    """
+    # expecting = 0 (.e.g)
+    # if == -1
+        # לא אכפת
+    # if == 1
+        # not good
+    merged_row = []
+    for col in range(len(rows[0])):
+        expecting = rows[0][col]
+        broke_expectation = False
+        for row in range(1, len(rows)):  # check the 1,
+            print(f"value {rows[row][col]}")
+            if rows[row][col] != expecting and rows[row][col] != -1:
+                broke_expectation = True
+        merged_row.append(UNDECIDED if broke_expectation else expecting)
+    return merged_row
 
 
 constraint_satisfactions(4, [1, 2])
